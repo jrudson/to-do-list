@@ -1,8 +1,8 @@
 .container {
     display: flex;
-    width: 100vw;
+    width: 100%;
     position: relative;
-    justify-content: end;
+    justify-content: space-between;
 }
 
 .cards {
@@ -18,4 +18,14 @@
     font-size: 22px;
     margin-left: 85px;
     margin-top: 5px;
+}
+
+.containerCards {
+    display: flex;
+    width: 100%;
+    position: relative;
+    flex-direction: row;
+}
+
+.sidebarContainer {
 }

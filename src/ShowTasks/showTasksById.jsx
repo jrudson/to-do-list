@@ -2,7 +2,8 @@ import React, { useCallback, useEffect } from "react";
 import api from "../Services/api";
 import { useQuery } from 'react-query';
 import './showTasksById.css';
-import Card from "../Components/Card";
+import Card from "../Components/Cards/Card";
+import Sidebar from "../Components/Sidebar/Sidebar";
 
 const ShowTasksById = () => {
 
@@ -30,22 +31,27 @@ const ShowTasksById = () => {
 
         return (
             <div className="container">
-                <div className="cards">
-                    <Card
-                        task={recent}
-                    />
+                <div className="sidebarContainer">
+                    <Sidebar />
                 </div>
-                <div className="cards">
-                    <p className="titulo">Minhas Tarefas</p>
-                    <Card
-                        task={ongoing}
-                    />
-                </div>
+                <div className="containerCards">
+                    <div className="cards">
+                        <Card
+                            task={recent}
+                        />
+                    </div>
+                    <div className="cards">
+                        <p className="titulo">Minhas Tarefas</p>
+                        <Card
+                            task={ongoing}
+                        />
+                    </div>
 
-                <div className="cards">
-                    <Card
-                        task={concluded}
-                    />
+                    <div className="cards">
+                        <Card
+                            task={concluded}
+                        />
+                    </div>
                 </div>
             </div>
         )
