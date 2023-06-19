@@ -1,5 +1,21 @@
 .container {
-    width: 20vw;
-    height: 100vh;
-    text-align: center;
+    display: flex;
+    width: 100vw;
+    position: relative;
+    justify-content: end;
+}
+
+.cards {
+    margin: 20px;
+}
+
+.titulo {
+    display: flex;
+    position: absolute;
+    color: white;
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 22px;
+    margin-left: 85px;
+    margin-top: 5px;
 }

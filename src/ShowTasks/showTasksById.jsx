@@ -2,17 +2,14 @@ import React, { useCallback, useEffect } from "react";
 import api from "../Services/api";
 import { useQuery } from 'react-query';
 import './showTasksById.css';
-import useFavoriteRepoStore from "../stores/useFavoriteRepos";
 import Card from "../Components/Card";
 
 const ShowTasksById = () => {
 
     const getTasks = async () => {
         try {
-            // const tasks = [];
             const getTasksById = await api.get(`tasks/632f0998c04ccb782983b88f`);
             const task = getTasksById.data;
-            // tasks.push(task);
             return task;
         } catch (error) {
             console.log('Esse é o erro');
@@ -20,44 +17,36 @@ const ShowTasksById = () => {
         }
     }
 
-    // const favoriteRepoId = useFavoriteRepoStore((state) => state.favoriteRepoIds);
-    // const addToFavorites = useFavoriteRepoStore((state) => state.addToFavorites);
-    // const removeFromFavorites = useFavoriteRepoStore((state) => state.removeFromFavorites);
-
-    // const handleAddToFavorites = useCallback((repoId) => {
-    //     console.log('repoId');
-    //     console.log(repoId);
-    //     addToFavorites(repoId);
-    // }, []);
-
-    // const handleRemoveFromFavorites = useCallback((repoId) => {
-    //     console.log('repoId');
-    //     console.log(repoId);
-    //     removeFromFavorites(repoId);
-    // }, []);
-
     try {
         const query = useQuery('tasks', getTasks);
 
-        const ongoing = query.data.filter((element) => element.status == 'Em andamento');
-        const concluded = query.data.filter((element) => element.status == 'Concluido');
+        // Se não tiver nenhum elemento com o status da lista vai dar um erro
+        // Impossível rodar a tela com qualquer um dos elementos vazios
+        // Resolver bug
+
+        const recent = query.data.filter((element) => element.status === 'Nova');
+        const ongoing = query.data.filter((element) => element.status === 'Em andamento');
+        const concluded = query.data.filter((element) => element.status === 'Concluido');
 
         return (
             <div className="container">
-                {/* {query.data.map((task, index) => { */}
+                <div className="cards">
+                    <Card
+                        task={recent}
+                    />
+                </div>
+                <div className="cards">
+                    <p className="titulo">Minhas Tarefas</p>
+                    <Card
+                        task={ongoing}
+                    />
+                </div>
 
-
-                return (
-                <Card
-                    task={task}
-                    index={index}
-                // addToFavorites={handleAddToFavorites}
-                // removeFromFavorites={handleRemoveFromFavorites}
-                // Aqui ele verifica o que está dentro do state, no caso ele está vazio, por isso só aparecem botões para "adicionar" aos favoritos
-                // isFavorite={favoriteRepoId.includes(task.name_task)}
-                />
-                );
-                {/* })} */}
+                <div className="cards">
+                    <Card
+                        task={concluded}
+                    />
+                </div>
             </div>
         )
     } catch (error) {
