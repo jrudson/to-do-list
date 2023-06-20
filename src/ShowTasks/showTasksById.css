@@ -25,6 +25,7 @@
     width: 100%;
     position: relative;
     flex-direction: row;
+    margin-left: 250px;
 }
 
 .sidebarContainer {
