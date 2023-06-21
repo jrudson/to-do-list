@@ -10,7 +10,6 @@ const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => {
-        console.log("Abri");
         setSidebar(!sidebar)
     };
 

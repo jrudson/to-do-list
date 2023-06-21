@@ -9,7 +9,7 @@ export const ContainerSidebarActive = styled.div`
     position: fixed;
     left: ${props => props.sidebar ? '0' : '-100%'};
     background-color: #2A2E2A;
-    animation: showSidebar 1s;
+    animation: showSidebar 0.5s;
 
     > svg {
         color: white;
@@ -19,7 +19,7 @@ export const ContainerSidebarActive = styled.div`
         height: 30px;
         cursor: pointer;
         margin-top: 10px;
-        animation: showButtom 1s;
+        animation: showButtom 0.5s;
       }
     
       @keyframes showSidebar {

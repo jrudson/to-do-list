@@ -2,15 +2,15 @@ import { create } from 'zustand';
 
 const useFavoriteRepoStore = create(
     (set) => ({
-        favoriteRepoIds: [],
+        favoriteRepoIds: false,
         addToFavorites: (repoId) => {
             set((state) => ({
-                favoriteRepoIds: [...state.favoriteRepoIds, repoId]
+                favoriteRepoIds: true
             }));
         },
         removeFromFavorites: (repoId) => {
             set((state) => ({
-                favoriteRepoIds: [...state.favoriteRepoIds.filter((id) => id != repoId)]
+                favoriteRepoIds: false
             }));
         }
     })

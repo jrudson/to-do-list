@@ -1,3 +1,14 @@
+.container-cards {
+    display: flex;
+    height: 550px;
+    width: 280px;
+    background-color: #2A2E2A;
+    border-radius: 15px;
+    margin-top: 55px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .card {
     display: flex;
     flex-direction: column; 
@@ -27,10 +38,9 @@
 
 .cardFather {
     width: 280px;
-    height: 550px;
+    height: 500px;
     background-color: #2A2E2A;
     border-radius: 15px;
-    margin-top: 55px;
     overflow: auto;
     scrollbar-width: thin;
     scrollbar-color: #888888 #2A2E2A;
@@ -56,6 +66,12 @@
 .cardFather::-webkit-scrollbar-track {
     background-color: #2A2E2A;
     border-radius: 15px;
+}
+
+.scrollContainer {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
 }
 
 .title2 {
@@ -87,3 +103,38 @@
     text-align: center;
     color: #008000;
 }
+
+.bottom {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    background-color: #2A2E2A;
+    border-radius: 15px;
+}
+
+.icon-add {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.3s; /* Adiciona uma transição suave */
+}
+
+.icon-add:hover {
+    transform: scale(1.2); /* Aumenta o tamanho em 20% */
+}
+
+.delete-buttom {
+    display: flex;
+    position: absolute;
+    left: 215px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: transform 0.3s; /* Adiciona uma transição suave */
+}
+
+.delete-buttom:hover {
+    transform: scale(1.2); /* Aumenta o tamanho em 20% */
+}
+
