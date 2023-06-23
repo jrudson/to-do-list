@@ -10,7 +10,15 @@ import {
     ContainerInputName,
     InputCompleteDescription,
     ContainerInputCompleteDescription,
-    Texts
+    Texts,
+    OptionStatus,
+    SelectStatus,
+    ContainerStatusAndDate,
+    FatherStatusAndDate,
+    Date,
+    FatherDate,
+    Title,
+    ButtomCreate
 }
     from "./AddTaskStyles";
 
@@ -27,12 +35,21 @@ const AddTask = () => {
         removeFromFavorites(false);
     }
 
-    // Criar um quadrado dentro do modal com as informação que precisamos para add a task, para que assim possamos também ter acesso ao clique fora do modal para fecha-lo
+    const [statusOption, setStatusOption] = useState('');
+    const [projectsOption, setProjectOption] = useState('');
 
+    const handleChangeStatusOption = (event) => {
+        setStatusOption(event.target.value);
+    };
+
+    const handleChangeProjectOption = (event) => {
+        setProjectOption(event.target.value);
+    }
+
+    // Criar um quadrado dentro do modal com as informação que precisamos para add a task, para que assim possamos também ter acesso ao clique fora do modal para fecha-lo
     const customStyles = {
         content: {
             display: 'flex',
-            alignItems: 'center',
             marginTop: '-5%',
             marginLeft: '-5%',
             height: '100%',
@@ -54,17 +71,43 @@ const AddTask = () => {
                 <OutFormSide onClick={handleRemoveFromFavorites} />
 
                 <ContainerForm>
+                    <Title>Crie uma nova tarefa</Title>
                     <ContainerInputName>
                         <Texts>Nome da tarefa: </Texts>
                         <InputTitle type="text" />
                     </ContainerInputName>
 
-                    <ContainerInputCompleteDescription>
-                        <Texts>Descrição: </Texts>
-                        <InputCompleteDescription type="text" />
-                    </ContainerInputCompleteDescription>
-                    <Texts>Status</Texts>
-                    <p>Projeto</p>
+
+                    <Texts>Projeto: </Texts>
+                    <SelectStatus value={projectsOption} onChange={handleChangeProjectOption}>
+                        <OptionStatus value="">Selecione uma opção</OptionStatus>
+                        <OptionStatus value="opcao1">Opção 1</OptionStatus>
+                        <OptionStatus value="opcao2">Opção 2</OptionStatus>
+                        <OptionStatus value="opcao3">Opção 3</OptionStatus>
+                    </SelectStatus>
+
+                    <ContainerStatusAndDate>
+                        <FatherStatusAndDate>
+                            <Texts>Status: </Texts>
+                            <SelectStatus required value={statusOption} onChange={handleChangeStatusOption}>
+                                <OptionStatus value="" disabled>Selecione uma opção</OptionStatus>
+                                <OptionStatus value="opcao1">Nova</OptionStatus>
+                                <OptionStatus value="opcao2">Em andamento</OptionStatus>
+                                <OptionStatus value="opcao3">Concluida</OptionStatus>
+                            </SelectStatus>
+                        </FatherStatusAndDate>
+                        <FatherDate>
+                            <Texts>Data: </Texts>
+                            <Date type="date" />
+                        </FatherDate>
+                    </ContainerStatusAndDate>
+
+                    <Texts>Descrição: </Texts>
+                    <InputCompleteDescription type="text" />
+
+                    <ButtomCreate
+                    >CREATE</ButtomCreate>
+
                 </ContainerForm>
 
                 <OutFormSide onClick={handleRemoveFromFavorites} />

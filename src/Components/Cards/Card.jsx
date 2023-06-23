@@ -17,6 +17,7 @@ const Card = ({ task }) => {
     return (
         <div className="container-cards">
             <AddTask />
+            {/* <Modal></Modal> */}
             <div className="cardFather">
                 {
                     //Melhorar esse código porque ficou uma bosta
