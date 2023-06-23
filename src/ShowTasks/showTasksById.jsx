@@ -4,8 +4,25 @@ import { useQuery } from 'react-query';
 import './showTasksById.css';
 import Card from "../Components/Cards/Card";
 import Sidebar from "../Components/Sidebar/Sidebar";
+import useManagerProjects from "../stores/useManagerProjects";
 
 const ShowTasksById = () => {
+
+    const addToProjects = useManagerProjects((state) => state.addToProjects);
+
+    const handleAddToProjects = (data) => {
+        addToProjects(data);
+    }
+
+    const getAllProjects = async () => {
+        const allProjects = await api.get('/allprojects');
+        handleAddToProjects(allProjects.data);
+    }
+
+    useEffect(() => {
+        getAllProjects();
+    }, [ShowTasksById]);
+
 
     const getTasks = async () => {
         try {

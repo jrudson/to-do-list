@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import useFavoriteRepoStore from "../../stores/useFavoriteRepos";
+import useManagerProjects from "../../stores/useManagerProjects";
+import api from "../../Services/api";
 import {
     ContainerForm,
     OutFormTop,
@@ -9,7 +11,6 @@ import {
     InputTitle,
     ContainerInputName,
     InputCompleteDescription,
-    ContainerInputCompleteDescription,
     Texts,
     OptionStatus,
     SelectStatus,
@@ -19,22 +20,13 @@ import {
     FatherDate,
     Title,
     ButtomCreate
-}
-    from "./AddTaskStyles";
+} from "./AddTaskStyles";
+
+Modal.setAppElement('#root');
 
 const AddTask = () => {
 
-
-    const test = useFavoriteRepoStore((state) => state.favoriteRepoIds);
-    console.log('test new');
-    console.log(test);
-
-    const removeFromFavorites = useFavoriteRepoStore((state) => state.removeFromFavorites);
-
-    const handleRemoveFromFavorites = () => {
-        removeFromFavorites(false);
-    }
-
+    // Gerencia os valores selecionados dos campos de seleção
     const [statusOption, setStatusOption] = useState('');
     const [projectsOption, setProjectOption] = useState('');
 
@@ -45,6 +37,20 @@ const AddTask = () => {
     const handleChangeProjectOption = (event) => {
         setProjectOption(event.target.value);
     }
+
+
+    // Fecha o modal de que adiciona uma task quando selecionado
+    const test = useFavoriteRepoStore((state) => state.favoriteRepoIds);
+    const removeFromFavorites = useFavoriteRepoStore((state) => state.removeFromFavorites);
+
+    const handleRemoveFromFavorites = () => {
+        removeFromFavorites(false);
+    }
+
+    const projects = useManagerProjects((state) => state.allProjects);
+
+    console.log('projects');
+    console.log(projects);
 
     // Criar um quadrado dentro do modal com as informação que precisamos para add a task, para que assim possamos também ter acesso ao clique fora do modal para fecha-lo
     const customStyles = {
