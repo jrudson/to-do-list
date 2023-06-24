@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import useFavoriteRepoStore from "../../stores/useFavoriteRepos";
 import useManagerProjects from "../../stores/useManagerProjects";
-import api from "../../Services/api";
 import {
     ContainerForm,
     OutFormTop,
@@ -21,6 +20,7 @@ import {
     Title,
     ButtomCreate
 } from "./AddTaskStyles";
+import api from "../../Services/api";
 
 Modal.setAppElement('#root');
 
@@ -29,6 +29,9 @@ const AddTask = () => {
     // Gerencia os valores selecionados dos campos de seleção
     const [statusOption, setStatusOption] = useState('');
     const [projectsOption, setProjectOption] = useState('');
+    const [date, setDate] = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
 
     const handleChangeStatusOption = (event) => {
         setStatusOption(event.target.value);
@@ -36,6 +39,18 @@ const AddTask = () => {
 
     const handleChangeProjectOption = (event) => {
         setProjectOption(event.target.value);
+    }
+
+    const handleDateChange = (event) => {
+        setDate(event.target.value);
+    }
+
+    const handleTitle = (event) => {
+        setTitle(event.target.value)
+    }
+
+    const handleChangeDescription = (event) => {
+        setDescription(event.target.value);
     }
 
 
@@ -49,8 +64,8 @@ const AddTask = () => {
 
     const projects = useManagerProjects((state) => state.allProjects);
 
-    console.log('projects');
-    console.log(projects);
+    console.log('projectsOption');
+    console.log(projectsOption);
 
     // Criar um quadrado dentro do modal com as informação que precisamos para add a task, para que assim possamos também ter acesso ao clique fora do modal para fecha-lo
     const customStyles = {
@@ -80,16 +95,20 @@ const AddTask = () => {
                     <Title>Crie uma nova tarefa</Title>
                     <ContainerInputName>
                         <Texts>Nome da tarefa: </Texts>
-                        <InputTitle type="text" />
+                        <InputTitle type="text" value={title} onChange={handleTitle} />
                     </ContainerInputName>
 
 
                     <Texts>Projeto: </Texts>
-                    <SelectStatus value={projectsOption} onChange={handleChangeProjectOption}>
-                        <OptionStatus value="">Selecione uma opção</OptionStatus>
-                        <OptionStatus value="opcao1">Opção 1</OptionStatus>
-                        <OptionStatus value="opcao2">Opção 2</OptionStatus>
-                        <OptionStatus value="opcao3">Opção 3</OptionStatus>
+                    <SelectStatus required value={projectsOption} onChange={handleChangeProjectOption}>
+                        <OptionStatus value="" disabled>Selecione uma opção</OptionStatus>
+                        {
+                            projects.map((project, index) => {
+                                return (
+                                    <OptionStatus value={project.id} key={index}>{project.title}</OptionStatus>
+                                )
+                            })
+                        }
                     </SelectStatus>
 
                     <ContainerStatusAndDate>
@@ -97,22 +116,37 @@ const AddTask = () => {
                             <Texts>Status: </Texts>
                             <SelectStatus required value={statusOption} onChange={handleChangeStatusOption}>
                                 <OptionStatus value="" disabled>Selecione uma opção</OptionStatus>
-                                <OptionStatus value="opcao1">Nova</OptionStatus>
-                                <OptionStatus value="opcao2">Em andamento</OptionStatus>
-                                <OptionStatus value="opcao3">Concluida</OptionStatus>
+                                <OptionStatus value="Nova">Nova</OptionStatus>
+                                <OptionStatus value="Em andamento">Em andamento</OptionStatus>
+                                <OptionStatus value="Concluida">Concluido</OptionStatus>
                             </SelectStatus>
                         </FatherStatusAndDate>
                         <FatherDate>
                             <Texts>Data: </Texts>
-                            <Date type="date" />
+                            <Date type="date" value={date} onChange={handleDateChange} />
                         </FatherDate>
                     </ContainerStatusAndDate>
 
                     <Texts>Descrição: </Texts>
-                    <InputCompleteDescription type="text" />
+                    <InputCompleteDescription type="text" value={description} onChange={handleChangeDescription} />
 
                     <ButtomCreate
-                    >CREATE</ButtomCreate>
+                        onClick={async () => {
+
+                            const newTask = await api.post('/tasks', {
+                                name_task: title,
+                                projectsId: projectsOption,
+                                status: statusOption,
+                                isCompleted: false,
+                                doneAt: `${date}T00:00:00Z`,
+                                // name: description
+                            });
+                            console.log(`newTask`);
+                            console.log(newTask);
+                        }}
+                    >
+                        CREATE
+                    </ButtomCreate>
 
                 </ContainerForm>
 

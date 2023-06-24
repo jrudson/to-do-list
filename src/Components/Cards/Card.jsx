@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import './styles.css';
 import { RiPlayListAddLine, RiDeleteBin5Line } from 'react-icons/ri';
 import api from "../../Services/api";
-import Modal from 'react-modal';
 import AddTask from "../newTasks/AddTasks";
 import useFavoriteRepoStore from "../../stores/useFavoriteRepos";
 
@@ -17,7 +16,6 @@ const Card = ({ task }) => {
     return (
         <div className="container-cards">
             <AddTask />
-            {/* <Modal></Modal> */}
             <div className="cardFather">
                 {
                     //Melhorar esse código porque ficou uma bosta

@@ -19,6 +19,8 @@ const ShowTasksById = () => {
         handleAddToProjects(allProjects.data);
     }
 
+    const projects = useManagerProjects((state) => state.allProjects);
+
     useEffect(() => {
         getAllProjects();
     }, [ShowTasksById]);
@@ -26,25 +28,29 @@ const ShowTasksById = () => {
 
     const getTasks = async () => {
         try {
-            const getTasksById = await api.get(`tasks/632f0998c04ccb782983b88f`);
+            // let getTasksById = await api.get(`tasks/632f0998c04ccb782983b88f`);
+            const getTasksById = await api.get(`/findAllTasks`);
             const task = getTasksById.data;
             return task;
-        } catch (error) {
+        }
+        catch (error) {
             console.log('Esse é o erro');
             console.log(error);
         }
     }
 
     try {
+
         const query = useQuery('tasks', getTasks);
+
 
         // Se não tiver nenhum elemento com o status da lista vai dar um erro
         // Impossível rodar a tela com qualquer um dos elementos vazios
         // Resolver bug
 
         const recent = query.data.filter((element) => element.status === 'Nova');
-        const ongoing = query.data.filter((element) => element.status === 'Em andamento');
-        const concluded = query.data.filter((element) => element.status === 'Concluido');
+        const ongoing = query.data.filter((element) => element.status === 'Em andamento' || element.status === 'em andamento');
+        const concluded = query.data.filter((element) => element.status === 'Concluido' || element.status === 'Concluida');
 
         return (
             <div className="container">
