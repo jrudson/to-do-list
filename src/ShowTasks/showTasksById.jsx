@@ -43,6 +43,8 @@ const ShowTasksById = () => {
 
         const query = useQuery('tasks', getTasks);
 
+        console.log('query.data');
+        console.log(query.data);
 
         // Se não tiver nenhum elemento com o status da lista vai dar um erro
         // Impossível rodar a tela com qualquer um dos elementos vazios

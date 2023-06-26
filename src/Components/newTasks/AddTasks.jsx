@@ -139,7 +139,9 @@ const AddTask = () => {
                                 status: statusOption,
                                 isCompleted: false,
                                 doneAt: `${date}T00:00:00Z`,
-                                // name: description
+                                description: description,
+                                name: 'f',
+                                projectName: ''
                             });
                             console.log(`newTask`);
                             console.log(newTask);
